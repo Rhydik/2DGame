@@ -9,13 +9,21 @@ namespace Engine.Manager
 {
     public class ComponentManager
     {
-        private static readonly ComponentManager instance = new ComponentManager();
+        private static readonly ComponentManager instance;
 
-        private Dictionary<int, List<IComponent>> entity = new Dictionary<int, List<IComponent>>();
+        private Dictionary<int, List<IComponent>> entity;
 
-        private ComponentManager() { }
+        static ComponentManager()
+        {
+            instance = new ComponentManager();
+        }
 
-        private static ComponentManager Instance
+        private ComponentManager()
+        {
+            entity = new Dictionary<int, List<IComponent>>();
+        }
+
+        public static ComponentManager Instance
         {
             get
             {
@@ -58,11 +66,29 @@ namespace Engine.Manager
             }
         }
 
-        public static int nextId = 0;
+        public static int nextId = 1;
 
         private void NextId()
         {
             nextId++;
         }
+
+        public List<T> GetComponentsOfType<T>(IComponent component) where T: IComponent
+        {
+            List<T> list = new List<T>();
+            foreach (var c in entity)
+            {
+                if (c.Value.Contains(component))
+                {
+                    var tempComp = c.Value;
+
+                    foreach (var t in tempComp)
+                    {
+                        //list.Add(t.GetType);
+                    }
+                }
+            }
+            return list;
+        } 
     }
 }

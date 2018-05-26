@@ -52,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Systems\IRender.cs" />
     <Compile Include="Systems\IUpdate.cs" />
+    <Compile Include="Systems\SpriteBatchSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
