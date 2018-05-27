@@ -35,6 +35,10 @@ namespace Engine.Manager
         {
             var key = component.GetType();
 
+            if (!entity.ContainsKey(key))
+            {
+                entity.Add(component.GetType(), new Dictionary<int, IComponent>());
+            }
             entity[key].Add(id, component);
         }
 
@@ -42,14 +46,20 @@ namespace Engine.Manager
         {
             var key = component.GetType();
 
+            if (!entity.ContainsKey(key))
+            {
+                return;
+            }
             entity[key].Remove(id);
         }
 
-        public void CreateNewEntity(IComponent component)
+        public int CreateNewEntity(IComponent component)
         {
             int entity = NextId();
 
             AddComponentToEntity(entity, component);
+
+            return entity;
         }
 
         public static int nextId = 1;

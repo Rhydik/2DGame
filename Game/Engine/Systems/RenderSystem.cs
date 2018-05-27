@@ -23,7 +23,8 @@ namespace Engine.Systems
                 PositionComponent position = cm.GetComponentsOfType<PositionComponent>().First().Value as PositionComponent;
                 SpriteComponent sprite = sb.Value as SpriteComponent;
 
-                spriteBatch.Draw(sprite.Texture, position.Position, Color.White);
+
+                spriteBatch.Draw(sprite.Texture, sprite.Rectangle, Color.White);
             }
 
             spriteBatch.End();
