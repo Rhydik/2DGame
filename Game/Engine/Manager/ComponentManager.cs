@@ -11,7 +11,7 @@ namespace Engine.Manager
     {
         private static readonly ComponentManager instance;
 
-        private Dictionary<int, List<IComponent>> entity;
+        private Dictionary<Type, Dictionary<int, IComponent>> entity;
 
         static ComponentManager()
         {
@@ -20,7 +20,7 @@ namespace Engine.Manager
 
         private ComponentManager()
         {
-            entity = new Dictionary<int, List<IComponent>>();
+            entity = new Dictionary<Type, Dictionary<int, IComponent>>();
         }
 
         public static ComponentManager Instance
@@ -33,62 +33,36 @@ namespace Engine.Manager
 
         public void AddComponentToEntity(int id, IComponent component)
         {
-            if (entity.ContainsKey(id))
-            {
-                List<IComponent> listOfComponents = entity[id];
+            var key = component.GetType();
 
-                listOfComponents.Add(component);
-            }
+            entity[key].Add(id, component);
         }
 
-        public void RemoveComponentFromEntity(int id, IComponent component)
+        public void RemoveEntity(int id, IComponent component)
         {
-            if (entity.ContainsKey(id))
-            {
-                List<IComponent> listOfComponents = entity[id];
+            var key = component.GetType();
 
-                listOfComponents.Remove(component);
-            }
+            entity[key].Remove(id);
         }
 
-        public void CreateNewEntity()
+        public void CreateNewEntity(IComponent component)
         {
-            List<IComponent> list = new List<IComponent>();
+            int entity = NextId();
 
-            entity.Add(nextId, list);
-        }
-
-        public void RemoveEntity(int id)
-        {
-            if (entity.ContainsKey(id))
-            {
-                entity.Remove(id);
-            }
+            AddComponentToEntity(entity, component);
         }
 
         public static int nextId = 1;
 
-        private void NextId()
+        private int NextId()
         {
-            nextId++;
+            return nextId++;
         }
-
-        public List<T> GetComponentsOfType<T>(IComponent component) where T: IComponent
+ 
+        public Dictionary<int, IComponent> GetComponentsOfType<ComponentType>()
         {
-            List<T> list = new List<T>();
-            foreach (var c in entity)
-            {
-                if (c.Value.Contains(component))
-                {
-                    var tempComp = c.Value;
-
-                    foreach (var t in tempComp)
-                    {
-                        //list.Add(t.GetType);
-                    }
-                }
-            }
-            return list;
-        } 
+            //Return Dictionary with all entities containing a specific component
+            return entity[typeof(ComponentType)];
+        }
     }
 }

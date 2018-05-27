@@ -9,9 +9,6 @@ namespace Engine.Components
 {
     public class SpriteComponent : IComponent
     {
-        public int Height;
-        public int Width;
-        public SpriteBatch SpriteBatch;
-        public string Image;
+        public Texture2D Texture;
     }
 }

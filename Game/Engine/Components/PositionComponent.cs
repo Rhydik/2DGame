@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,6 @@ namespace Engine.Components
 {
     public class PositionComponent : IComponent
     {
-        public int X;
-        public int Y;
-        public int VelX;
-        public int VelY;
+        public Vector2 Position;
     }
 }
